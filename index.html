@@ -53,7 +53,9 @@
 
     // Define layer
     const source = new carto.source.Dataset('populated_places');
-    const viz = new carto.Viz();
+    const viz = new carto.Viz(`
+    symbol: plane
+    `);
     const layer = new carto.Layer('layer', source, viz);
 
     layer.addTo(map, 'watername_ocean');
