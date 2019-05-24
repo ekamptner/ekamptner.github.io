@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Add layer | CARTO</title>
+  <title>Single Image | CARTO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <script src="https://libs.cartocdn.com/carto-vl/v1.2.5/carto-vl.min.js"></script>
@@ -16,10 +16,10 @@
   <aside class="toolbox">
     <div class="box">
       <header>
-        <h1>Add layer</h1>
+        <h1>Single Image</h1>
       </header>
       <section>
-        <p class="description open-sans">Add one CARTO layer to your map</p>
+        <p class="description open-sans">Symbolize points with a built-in image</p>
       </section>
       <footer class="js-footer"></footer>
     </div>
@@ -34,9 +34,9 @@
   <script>
     const map = new mapboxgl.Map({
       container: 'map',
-      style: carto.basemaps.positron,
-      center: [0, 0],
-      zoom: 1,
+      style: carto.basemaps.voyager,
+      center: [0, 30],
+      zoom: 3,
       scrollZoom: false
     });
 
@@ -45,22 +45,22 @@
     });
     map.addControl(nav, 'top-left');
 
-    // Define user
     carto.setDefaultAuth({
       username: 'cartovl',
       apiKey: 'default_public'
     });
 
-    // Define layer
     const source = new carto.source.Dataset('populated_places');
+
     const viz = new carto.Viz(`
     symbol: star
     `);
+
     const layer = new carto.Layer('layer', source, viz);
 
     layer.addTo(map, 'watername_ocean');
-    layer.on('loaded', hideLoader);
 
+    layer.on('loaded', hideLoader);
     function hideLoader() {
       document.getElementById('loader').style.opacity = '0';
     }
