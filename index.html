@@ -1,72 +1,97 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>Single Image | CARTO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Include icons -->
+  <link rel="stylesheet" href="https://libs.cartocdn.com/airship-icons/v2.0.5/icons.css">
+  <!-- Include airship components -->
+  <script src="https://libs.cartocdn.com/airship-components/v2.0.5/airship.js"></script>
+  <link rel="stylesheet" href="https://libs.cartocdn.com/airship-style/v2.0.5/airship.css">
+  <!-- Include CARTO VL -->
   <script src="https://libs.cartocdn.com/carto-vl/v1.2.5/carto-vl.min.js"></script>
-  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js"></script>
-  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css" rel="stylesheet" />
   <link href="https://carto.com/developers/carto-vl/v1.2.5/examples/maps/style.css" rel="stylesheet">
+  <!-- Include Mapbox GL -->
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js"></script>
+  <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css" />
+  <style>    
+    :root {
+    --main-background-color: #FFF;
+    --as--color--secondary: grey; 
+    }
+    .element {
+    --element-background-color: #E1E2E3;
+    }    
+    .icon-wrapper{
+      flex: 0 0 60px;
+      margin: 15px 30px;
+      text-align: center;
+    }
+    i {
+      color:black;
+      font-size: 2em;
+      size: 120px;
+    }
+    p {
+      font-family: 'Noto Sans';
+      font-size: 12px;
+      text-align: left;
+      color: black;
+    }
+    button {
+      background: none;
+      border: orangered;
+      padding: 10px;
+      height: 75px;
+      size: 75px;
+    }
+    #menu {
+      position: relative left: 20px;
+      background: #fff;
+      padding: 10px;
+      font-family: 'Open Sans', sans-serif;
+      }
+  </style>
 </head>
 
-<body>
-  <div id="map"></div>
-  <aside class="toolbox">
-    <div class="box">
-      <header>
-        <h1>Single Image</h1>
-      </header>
-      <section>
-        <p class="description open-sans">Symbolize points with a built-in image</p>
-      </section>
-      <footer class="js-footer"></footer>
+<body class="as-app as-app-body">
+    <div class="as-content">
+      <main class="as-main">
+          <div class="as-map-area">
+              <div id="map"></div>
+              <aside class="toolbox">
+                <div class="box">
+                    <header>
+                        <h2>Legend</h2>
+                    </header>
+                    <!-- Add legend data -->
+                    <section>
+                        <div id="controls">
+                            <ul id="content"></ul>
+                        </div>
+                    </section>
+                </div>
+            </aside>
+          </div>
+          <div id='menu'>
+            <input id='positron' type='radio' name='rtoggle' value='light' checked='checked'>
+            <label for='streets'>positron</label>
+            <input id='imagery' type='radio' name='rtoggle' value='imagery'>
+            <label for='imagery'>voyager</label>
+        </div>
+        </main>      
+
+      <div id="loader">
+          <div class="CDB-LoaderIcon CDB-LoaderIcon--big">
+                  <svg class="CDB-LoaderIcon-spinner" viewBox="0 0 50 50">
+                    <circle class="CDB-LoaderIcon-path" cx="25" cy="25" r="20" fill="none"></circle>
+                  </svg>
+          </div>
+      </div>
+
     </div>
-  </aside>
-  <div id="loader">
-    <div class="CDB-LoaderIcon CDB-LoaderIcon--big">
-      <svg class="CDB-LoaderIcon-spinner" viewBox="0 0 50 50">
-        <circle class="CDB-LoaderIcon-path" cx="25" cy="25" r="20" fill="none"></circle>
-      </svg>
-    </div>
-  </div>
-  <script>
-    const map = new mapboxgl.Map({
-      container: 'map',
-      style: carto.basemaps.voyager,
-      center: [0, 30],
-      zoom: 3,
-      scrollZoom: false
-    });
 
-    const nav = new mapboxgl.NavigationControl({
-      showCompass: false
-    });
-    map.addControl(nav, 'top-left');
-
-    carto.setDefaultAuth({
-      username: 'cartovl',
-      apiKey: 'default_public'
-    });
-
-    const source = new carto.source.Dataset('populated_places');
-
-    const viz = new carto.Viz(`
-    symbol: star
-    `);
-
-    const layer = new carto.Layer('layer', source, viz);
-
-    layer.addTo(map, 'watername_ocean');
-
-    layer.on('loaded', hideLoader);
-    function hideLoader() {
-      document.getElementById('loader').style.opacity = '0';
-    }
-  </script>
+    <script src="map.js"></script>
 </body>
-
 </html>
-
-      
